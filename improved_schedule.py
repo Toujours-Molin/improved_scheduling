@@ -43,7 +43,7 @@ def info_pr_init_with_json(data_json):
     job_nb = 0
     for order in data_json['orders']:
         job_nb += order['productNB']
-    info_pr['start_date'] = data_json['orders'][0]['dateBegin'] + ' 00:00:00'
+    info_pr['start_date'] = data_json['orders'][0]['dateBegin'] + ' 00:00:00' ##! 这里的时间需要改为periodStartDate
     info_pr['job_nb'] = job_nb
 
     info_pr['process_info'] = []
@@ -97,7 +97,7 @@ def GMT_select(high_failure_machine: list = None): ##！需要考虑机器的不
             selected_num = random.choice(choice_list)
             selected_machine = position_array[1][selected_num]
             selected_op = position_array[0][selected_num]
-            if (not high_failure_machine) or num == 1 or selected_machine+1 not in high_failure_machine:
+            if (not high_failure_machine) or num == 1 or selected_machine+1 not in high_failure_machine: ##?含义？
                 flag = True
             else:
                 choice_list.remove(selected_num)
@@ -118,7 +118,7 @@ def GMT_select(high_failure_machine: list = None): ##！需要考虑机器的不
         # print(arr)
     return ms
 
-def get_all_pr_list(magic_large: int):
+def get_all_pr_list(magic_large: int): ##！初始化arr矩阵
     """
     the pr time of the machine that could not be used is set to a large number 9999
     :return:
@@ -133,7 +133,7 @@ def get_all_pr_list(magic_large: int):
             index += 1
     return pr_list
 
-def data_conversion(ms: list):
+def data_conversion(ms: list): ##！用处是？
     info_ma = collections.defaultdict(list)
     ms_upper_list = []
     # ms_upper example:[ (start of info o11 (1,1 ->o11),((1,10)->machine 1 with pr time 10,(2,11)) end of info o11),...]
