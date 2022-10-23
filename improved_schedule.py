@@ -97,7 +97,7 @@ def GMT_select(high_failure_machine: list = None): ##！需要考虑机器的不
             selected_num = random.choice(choice_list)
             selected_machine = position_array[1][selected_num]
             selected_op = position_array[0][selected_num]
-            if (not bool(high_failure_machine)) or num == 1 or selected_machine+1 not in high_failure_machine: ##?含义？
+            if (not bool(high_failure_machine)) or num == 1 or selected_machine+1 not in high_failure_machine: 
                 flag = True
             else:
                 choice_list.remove(selected_num)
@@ -148,7 +148,7 @@ def data_conversion(ms: list):
         machine_selected = ms_upper_list[position][1][code - 1][0]
         pr_time = ms_upper_list[position][1][code - 1][1]
         op_info = ms_upper_list[position][0]
-        info_ma[machine_selected].append(op_info + (pr_time,))
+        info_ma[machine_selected].append(op_info + (pr_time,))##? ,是？
     return info_ma
 
 def get_bottleneck(info_ma: dict):
@@ -204,7 +204,7 @@ class chromo_simp:
     def get_gene(self, machine: int):
         return self.__gene[machine]
 
-    def decode(self, info_ma: dict, os_list: list, bottleneck: tuple):##！不用此函数 当前版本
+    def decode(self, info_ma: dict, os_list: list, bottleneck: tuple): ##! 不用此函数 当前版本 / 还是用的吧？
         # first tuple element is pr_time, second tuple element is machine number
         op_ma = get_op_to_ma(info_ma)
 
