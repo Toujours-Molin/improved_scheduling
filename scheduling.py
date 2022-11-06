@@ -449,6 +449,8 @@ class Staff_Scheduling:
             updated_index = cooperated_info_index.copy()
             current_occupied = []
             current_scheduling = {}
+            total_plan['dayshift'] = {}
+            total_plan['nightshift'] = {}
             while len(updated_index) > 0:
                 current_target = [i for i, v in enumerate(updated_index) if v == updated_index[0]]
                 current_target_machine = [current_shift_machine_list[i] for i in current_target]
@@ -457,11 +459,11 @@ class Staff_Scheduling:
                 if len(current_target) <= 2:
                     if len(available_stuff) > 0:
                         for i in current_target_machine:
-                            current_scheduling[i] = available_stuff[0]
+                            current_scheduling[i] = [available_stuff[0]]
                         current_occupied.append(available_stuff[0])
                     else:
                         for i in current_target_machine:
-                            current_scheduling[i] = '缺1人'
+                            current_scheduling[i] = ['缺1人']
                 else:
                     if len(available_stuff) >= 2:
                         for i in current_target_machine:
@@ -477,7 +479,7 @@ class Staff_Scheduling:
                             current_scheduling[i] = ['缺2人'] 
                 updated_index = list(filter(lambda x: x != updated_index[0], updated_index)) ##! 更新设备协同的index
                 current_shift_machine_list = list(filter(lambda x: x not in current_target_machine, current_shift_machine_list)) ##! 更新一下当前班次的机器列表
-            total_plan[str((date, shiftType))] = current_scheduling
+            total_plan[shiftType][date] = current_scheduling
             last_shift_staff = current_occupied
         return total_plan
 
@@ -612,7 +614,7 @@ def schedule():
     start_temps = datetime.datetime.now()
     if request.method == 'POST':
         data = request.get_data()
-        data = json.load(data)
+        data = json.loads(data)
         info_pr_with_json(data)
     else:
         info_pr_with_json(required_data)
