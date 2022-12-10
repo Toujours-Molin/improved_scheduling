@@ -249,7 +249,7 @@ class GA_Tool:
             self.PT[(current_product, OS_index_PT[i], current_machine)], last_op_end_time)[0]
             schedule[1][OS_index[i]-1] = schedule[0][OS_index[i]-1] + self.PT[(current_product, OS_index_PT[i], current_machine)]
             ## 更新机器不可用时间段
-            updated_machineNotAvalPeriod[current_machine-1].append([schedule[1][OS_index[i]-1], schedule[1][OS_index[i]-1] + self.nonProcessingTime])
+            updated_machineNotAvalPeriod[current_machine-1].append([schedule[0][OS_index[i]-1], schedule[1][OS_index[i]-1] + self.nonProcessingTime])
         return schedule
     
     ## SEUENCE 适应度计算与选择
@@ -423,10 +423,10 @@ class Staff_Scheduling:
             for each in group:
                 if int(each[2][0:2])>=int(shiftTime[0][0:2]) and int(each[2][0:2])<=int(shiftTime[1][0:2]):
                     Day_stuff_list.append(each[0])
-                    machine_dic[(key,"dayshift")]=np.unique(Day_stuff_list)
+                    machine_dic[(key,"dayShift")]=np.unique(Day_stuff_list)
                 else:
                     Night_stuff_list.append(each[0])
-                    machine_dic[(key,"nightshift")]=np.unique(Night_stuff_list)
+                    machine_dic[(key,"nightShift")]=np.unique(Night_stuff_list)
         machine_time=sorted(machine_dic.keys())
         machine_dic_1={}
         for i in machine_time:
@@ -449,8 +449,8 @@ class Staff_Scheduling:
             updated_index = cooperated_info_index.copy()
             current_occupied = []
             current_scheduling = {}
-            total_plan['dayshift'] = {}
-            total_plan['nightshift'] = {}
+            total_plan['dayShift'] = {}
+            total_plan['nightShift'] = {}
             while len(updated_index) > 0:
                 current_target = [i for i, v in enumerate(updated_index) if v == updated_index[0]]
                 current_target_machine = [current_shift_machine_list[i] for i in current_target]
